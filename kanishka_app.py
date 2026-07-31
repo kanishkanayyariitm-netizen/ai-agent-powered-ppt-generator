@@ -124,10 +124,10 @@ if all(ALL_API) and user_query:
           response = agent.invoke({'messages':[{'role':"user",
                                                 "content":prompt}]})
         
-          code= response['messages'][-1]['text']
+          code= response['messages'][-1].content[0]['text']
         
-          st.html(code,width="streach",
-                  unsafe_allow_javascript=true)
+          st.html(code,width="strech",
+                  unsafe_allow_javascript=True)
   
     with tab3:
       st.header("Create PPT")
