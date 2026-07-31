@@ -128,23 +128,23 @@ if all(ALL_API) and user_query:
           st.html(code,width="streach",
                   unsafe_allow_javascript=true)
   
-  with tab3:
-    st.header("Create PPT")
-    if st.button("Click to generate:",key="generate_ppt_button"):
-      with st.spinner ("Running Agent.."):
-        final_prompt = prompt_generator(model, user_query)
-        
-        response = agent.invoke({'messages': [{'role': "user",
-                                               "content":final_prompt}]})
-        code = response['messages'] [-1].content[-1]['text']
-        st.html(code, width="stretch",
-                unsafe_allow_javascript=True)
-        
-        if st.download_button (label = "DOWNLOAD PPT",
-                            data code,
-                            file_name = 'ppt.html',
-                            mime = 'text/html'):
-          st.success("PPT Downloaded Successfully!!")
+    with tab3:
+      st.header("Create PPT")
+      if st.button("Click to generate:",key="generate_ppt_button"):
+        with st.spinner ("Running Agent.."):
+          final_prompt = prompt_generator(model, user_query)
+          
+          response = agent.invoke({'messages': [{'role': "user",
+                                                 "content":final_prompt}]})
+          code = response['messages'] [-1].content[-1]['text']
+          st.html(code, width="stretch",
+                  unsafe_allow_javascript=True)
+          
+          if st.download_button (label = "DOWNLOAD PPT",
+                              data code,
+                              file_name = 'ppt.html',
+                              mime = 'text/html'):
+            st.success("PPT Downloaded Successfully!!")
 
                 
                 
