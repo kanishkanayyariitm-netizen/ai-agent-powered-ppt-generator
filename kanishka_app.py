@@ -11,9 +11,9 @@ from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
 import streamlit as st
 
-GOOGLE_KEY_API = st.sidebar.text_input("Google-Api",type="password")
-GROQ_KEY_API = st.sidebar.text_input("Groq-Api",type="password")
-TAVILY_KEY_API = st.sidebar.text_input("Tavily-Api",type="password")
+GOOGLE_API_KEY = st.sidebar.text_input("Google-Api",type="password")
+GROQ_API_KEY = st.sidebar.text_input("Groq-Api",type="password")
+TAVILY_API_KEY = st.sidebar.text_input("Tavily-Api",type="password")
 
 os.environ["GOOGLE_API_KEY"]= GOOGLE_API_KEY
 os.environ["GROQ_API_KEY"]= GROQ_API_KEY
