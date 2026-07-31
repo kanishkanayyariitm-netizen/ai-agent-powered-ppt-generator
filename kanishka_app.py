@@ -122,7 +122,7 @@ if all(ALL_API) and user_query:
           in proper HTML news templates""" + user_query
           
           response = agent.invoke({'messages':[{'role':"user",
-                                                "content":prompt}]})
+                                                "content":final_prompt}]})
         
           code= response['messages'][-1].content[0]['text']
         
