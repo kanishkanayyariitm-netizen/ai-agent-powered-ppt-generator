@@ -15,9 +15,9 @@ GOOGLE_KEY_API = st.sidebar.text_input("Google-Api",type="password")
 GROQ_KEY_API = st.sidebar.text_input("Groq-Api",type="password")
 TAVILY_KEY_API = st.sidebar.text_input("Tavily-Api",type="password")
 
-os.nveiron["GOOGLE_API_KEY"]= GOOGLE_API_KEY
-os.nveiron["GROQ_API_KEY"]= GROQ_API_KEY
-os.nveiron["TAVILY_API_KEY"]= TAVILY_API_KEY 
+os.environ["GOOGLE_API_KEY"]= GOOGLE_API_KEY
+os.environ["GROQ_API_KEY"]= GROQ_API_KEY
+os.environ["TAVILY_API_KEY"]= TAVILY_API_KEY 
 
 ALL_API[GOOGLE_API_KEY,GROQ_API_KEY,TAVILY_API_KEY]
 
