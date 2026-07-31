@@ -12,9 +12,9 @@ from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
 import streamlit as st
 
-GOOGLE_KEY = st.sidebar.text_input("Google-Api",type="password")
-GROQ_KEY = st.sidebar.text_input("Groq-Api",type="password")
-TAVILY_KEY = st.sidebar.text_input("Tavily-Api",type="password")
+GOOGLE_KEY_API = st.sidebar.text_input("Google-Api",type="password")
+GROQ_KEY_API = st.sidebar.text_input("Groq-Api",type="password")
+TAVILY_KEY_API = st.sidebar.text_input("Tavily-Api",type="password")
 
 os.nveiron["GOOGLE_API_KEY"]= GOOGLE_KEY
 os.nveiron["GROQ_API_KEY"]= GROQ_KEY
@@ -24,14 +24,16 @@ ALL_API[GOOGLE_KEY,GROQ_KEY,TAVILY_KEY]
 
 if not all(ALL_API):
   st.sidebar.error("PASS API-KEYS")
-elif any(ALL_API)
-  st.sidebar.info("MUST PASS ALL API KEYS")
-else:
-  st.sidebar.success("API KEYS LOADED SUCCESSFULLY")
+elif all(ALL_API)
   # Step 1: Model Call
-    model ChatGoogleGenerativeAI(
-    model = "gemini-3.5-flash-lite", google_api_key = GOOGLE_API_KEY )
-
+   model = ChatGoogleGenerativeAI(
+    model = "gemini-3.5-flash-lite", 
+    google_api_key = GOOGLE_API_KEY )
+elif any(ALL_API):
+    st.sidebar.success("API KEYS LOADED SUCCESSFULLY")
+else:
+  st.sidebar.info("MUST PASS ALL API KEYS")
+   
 #============FORNTEND=====================
 st.title("AI-Agent-powered ppt generator")
 user_query = st.text_area("write your ppt topic or prompt:")
@@ -90,49 +92,60 @@ def prompt_generator(model,query):
     f.write(final_prompt)
   return final_prompt
 
-agent = create_agent(
-  model = model,
-  tools= [search_latest_info,
-          generate_image
-  ]
-  )
-#===================== display agent ======================
-st.sidebar.image(agent)
-#====================== with tabs ========================
-with tab1:
-  st.header("GENERATE IMAGE GIVE PROMPT")
-  if st.button("Clicks to generate:"):
-    with st.spinner():
-      data= generate_image(user_query)
-      st.image(data)
-      st.image("image.jpeg")
-  with tab2:
-    st.header("CHECK LATEST NEWS")
-    if st.button("fetch news:"):
+if all(ALL_API) and user_query:
+    agent = create_agent(
+      model = model,
+      tools= [search_latest_info,
+              generate_image
+    ]
+    )
+  #===================== display agent ======================
+  #st.sidebar.image(agent)
+  #====================== with tabs ========================
+  with tab1:
+    st.header("GENERATE IMAGE GIVE PROMPT")
+    if st.button("Clicks to generate:", key="generate_img_button"):
       with st.spinner("Running Agent.."):
+        data=f"https://image.pollinations.ai/{user_query}"
+        time.sleep(3)
+        st.image(data)
+        #st.image("image.jpeg")
+        #st.return()
+    with tab2:
+      st.header("CHECK LATEST NEWS")
+      if st.button("fetch news:", key="news_button"):
+        with st.spinner("Running Agent.."):
+  
+          prompt = """Give latest news India or word wind related
+          to tech, business, jobs, or uers requested output
+          in proper HTML news templates""" + user_query
+  
+  response = agent.invoke({'messages':[{'role':"user",
+                                        "content":prompt}]})
 
-        prompt = """Give latest news India or word wind related
-        to tech, business, jobs, or uers requested output
-        in proper HTML news templates""" + user_query
+  code= response['messages'][-1]['text']
 
-response = agent.invoke({'messages':[{'role':"user","content":prompt}]})
-code= response['messages'][-1]['text']
-st.html(code,width="streach",
-        unsafe_allow_javascript=true)
+  st.html(code,width="streach",
+          unsafe_allow_javascript=true)
+  
+  with tab3:
+    st.header("Create PPT")
+    if st.button("Click to generate:",key="generate_ppt_button"):
+      with st.spinner ("Running Agent.."):
+        final_prompt = prompt_generator(model, user_query)
+        
+        response = agent.invoke({'messages': [{'role': "user",
+                                               "content":final_prompt}]})
+        code = response['messages'] [-1].content[-1]['text']
+        st.html(code, width="stretch",
+                unsafe_allow_javascript=True)
+        
+        if st.download_button (label = "DOWNLOAD PPT",
+                            data code,
+                            file_name = 'ppt.html',
+                            mime = 'text/html'):
+          st.success("PPT Downloaded Successfully!!")
 
-with tab3:
-  st.header("Create PPT")
-  if st.button("Click to generate: "):
-    with st.spinner ("Running Agent.."):
-      final_prompt = prompt_generator(model, user_query)
-      
-      response = agent.invoke({'messages': [{'role': "user",
-                                             "content":final_prompt}]})
-      code = response['messages'] [-1].content[-1]['text']
-      st.html(code, width="stretch",\
-              unsafe_allow_javascript=True)
-      st.download_button (label = "DOWNLOAD PPT",
-                          data code,
-                          file_name = 'ppt.html',
-                          mime = 'text/html')
-      st.success("PPT Downloaded Successfully!!")
+                
+                
+           
