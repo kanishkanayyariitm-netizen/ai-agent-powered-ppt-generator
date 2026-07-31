@@ -102,15 +102,15 @@ if all(ALL_API) and user_query:
   #===================== display agent ======================
   #st.sidebar.image(agent)
   #====================== with tabs ========================
-  with tab1:
-    st.header("GENERATE IMAGE GIVE PROMPT")
-    if st.button("Clicks to generate:", key="generate_img_button"):
-      with st.spinner("Running Agent.."):
-        data=f"https://image.pollinations.ai/{user_query}"
-        time.sleep(3)
-        st.image(data)
-        #st.image("image.jpeg")
-        #st.return()
+    with tab1:
+      st.header("GENERATE IMAGE GIVE PROMPT")
+      if st.button("Clicks to generate:", key="generate_img_button"):
+        with st.spinner("Running Agent.."):
+          data=f"https://image.pollinations.ai/{user_query}"
+          time.sleep(3)
+          st.image(data)
+          #st.image("image.jpeg")
+          #st.return()
     with tab2:
       st.header("CHECK LATEST NEWS")
       if st.button("fetch news:", key="news_button"):
