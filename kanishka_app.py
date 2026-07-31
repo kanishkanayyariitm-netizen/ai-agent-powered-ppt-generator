@@ -62,8 +62,8 @@ def generate_image(img_prompt):
   with open(f"Image.jpeg",'wb') as f:
     f.write(content)
   from PIL import Image
-  return Image.open("Image.jpeg")
-
+  return url
+  
 # with tabs
 tab1, tab2, tab3 = st.tabs(["GENERATE IMAGE",
                             "CHECK LATET NEWS",
@@ -119,14 +119,14 @@ if all(ALL_API) and user_query:
           prompt = """Give latest news India or word wind related
           to tech, business, jobs, or uers requested output
           in proper HTML news templates""" + user_query
-  
-  response = agent.invoke({'messages':[{'role':"user",
-                                        "content":prompt}]})
-
-  code= response['messages'][-1]['text']
-
-  st.html(code,width="streach",
-          unsafe_allow_javascript=true)
+          
+          response = agent.invoke({'messages':[{'role':"user",
+                                                "content":prompt}]})
+        
+          code= response['messages'][-1]['text']
+        
+          st.html(code,width="streach",
+                  unsafe_allow_javascript=true)
   
   with tab3:
     st.header("Create PPT")
