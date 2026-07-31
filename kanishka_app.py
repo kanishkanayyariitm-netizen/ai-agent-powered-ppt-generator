@@ -1,6 +1,5 @@
 import os
 import time
-import IPython as ip
 import langchain
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import ChatGoogleGenerativeAI
