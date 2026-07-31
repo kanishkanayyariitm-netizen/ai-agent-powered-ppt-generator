@@ -24,7 +24,7 @@ ALL_API[GOOGLE_KEY,GROQ_KEY,TAVILY_KEY]
 
 if not all(ALL_API):
   st.sidebar.error("PASS API-KEYS")
-elif all(ALL_API)
+elif all(ALL_API):
   # Step 1: Model Call
    model = ChatGoogleGenerativeAI(
     model = "gemini-3.5-flash-lite", 
